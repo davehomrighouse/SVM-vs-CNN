@@ -6,7 +6,6 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 # Load artifacts once at startup
 svm_model = joblib.load("models/svm_model.pkl")
 tfidf_vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
-label_encoder = joblib.load("models/label_encoder.pkl")
 
 cnn_model = load_model("models/cnn_model.keras")
 tokenizer = joblib.load("models/tokenizer.pkl")
