@@ -46,6 +46,6 @@ def compare_models(text: str):
         "SVM Prediction": svm_label,
         "SVM Confidence": round(svm_conf, 4) if svm_conf is not None else "N/A",
         "CNN Prediction": cnn_label,
-        "CNN Confidence": round(cnn_conf, 4)
+        "CNN Confidence": round(cnn_conf, 4) if cnn_conf is not None else "N/A"
     }
     return result
