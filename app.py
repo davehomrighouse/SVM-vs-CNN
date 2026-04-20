@@ -34,12 +34,19 @@ with gr.Blocks() as demo:
         "Compare predictions from a TF-IDF + SVM model and a CNN model trained on the Reuters dataset."
     )
 
+with gr.Blocks() as demo:
+    gr.Markdown("# Reuters Text Classification Demo")
+    gr.Markdown(
+        "Compare predictions from a TF-IDF + SVM model and a CNN model trained on the Reuters dataset."
+    )
+
+    shared_input = gr.Textbox(
+        label="Enter text",
+        lines=6,
+        placeholder="Type or paste text here..."
+    )
+
     with gr.Tab("Single Model"):
-        text_input = gr.Textbox(
-            label="Enter news text",
-            lines=6,
-            placeholder="Type or paste a short news article snippet here..."
-        )
         model_choice = gr.Radio(
             ["SVM", "CNN"],
             value="SVM",
@@ -51,23 +58,19 @@ with gr.Blocks() as demo:
 
         predict_btn.click(
             fn=run_single_model,
-            inputs=[text_input, model_choice],
+            inputs=[shared_input, model_choice],
             outputs=[pred_label, pred_conf]
         )
 
     with gr.Tab("Compare Models"):
-        compare_input = gr.Textbox(
-            label="Enter news text",
-            lines=6,
-            placeholder="Paste the same input here to compare both models..."
-        )
         compare_btn = gr.Button("Compare")
         compare_output = gr.JSON(label="Model Comparison")
 
         compare_btn.click(
             fn=run_comparison,
-            inputs=compare_input,
+            inputs=shared_input,
             outputs=compare_output
         )
 
 demo.launch()
+s
