@@ -1,3 +1,13 @@
+---
+title: Reuters Text Classification Demo
+emoji: 🧠
+colorFrom: indigo
+colorTo: blue
+sdk: gradio
+app_file: app.py
+pinned: false
+---
+
 # SVM-vs-CNN
 # Project Overview
 
