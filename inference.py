@@ -4,7 +4,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 # Load artifacts once at startup
-class_labels = joblib.load("reuters_class_labels.pkl")
+class_labels = joblib.load("models/reuters_class_labels.pkl")
 
 svm_model = joblib.load("models/svm_model.pkl")
 tfidf_vectorizer = joblib.load("models/tfidf_vectorizer.pkl")
