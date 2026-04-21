@@ -1,6 +1,7 @@
 import gradio as gr
 from inference import predict_svm, predict_cnn, compare_models
 
+
 def run_single_model(text, model_choice):
     text = text.strip()
     if not text:
@@ -11,28 +12,23 @@ def run_single_model(text, model_choice):
     else:
         label, confidence = predict_cnn(text)
 
-    confidence_text = f"{confidence:.4f}" if isinstance(confidence, float) else "N/A"
-    return label, confidence_text
+    return label, confidence
 
 
 def run_comparison(text):
     text = text.strip()
     if not text:
-        return {
-            "SVM Prediction": "",
-            "SVM Confidence": "",
-            "CNN Prediction": "",
-            "CNN Confidence": ""
-        }
+        return "", "", "", ""
 
-    return compare_models(text)
+    results = compare_models(text)
 
-
-with gr.Blocks() as demo:
-    gr.Markdown("# Reuters Text Classification Demo")
-    gr.Markdown(
-        "Compare predictions from a TF-IDF + SVM model and a CNN model trained on the Reuters dataset."
+    return (
+        results["SVM Prediction"],
+        results["SVM Confidence"],
+        results["CNN Prediction"],
+        results["CNN Confidence"]
     )
+
 
 with gr.Blocks() as demo:
     gr.Markdown("# Reuters Text Classification Demo")
@@ -53,6 +49,7 @@ with gr.Blocks() as demo:
             label="Choose model"
         )
         predict_btn = gr.Button("Predict")
+
         pred_label = gr.Textbox(label="Predicted Category")
         pred_conf = gr.Textbox(label="Confidence")
 
@@ -64,12 +61,22 @@ with gr.Blocks() as demo:
 
     with gr.Tab("Compare Models"):
         compare_btn = gr.Button("Compare")
-        compare_output = gr.JSON(label="Model Comparison")
+
+        with gr.Row():
+            with gr.Column():
+                gr.Markdown("## SVM")
+                svm_pred = gr.Textbox(label="Predicted Category")
+                svm_conf = gr.Textbox(label="Probability/Tier", lines=4)
+
+            with gr.Column():
+                gr.Markdown("## CNN")
+                cnn_pred = gr.Textbox(label="Predicted Category")
+                cnn_conf = gr.Textbox(label="Probability/Tier", lines=5)
 
         compare_btn.click(
             fn=run_comparison,
             inputs=shared_input,
-            outputs=compare_output
+            outputs=[svm_pred, svm_conf, cnn_pred, cnn_conf]
         )
 
 demo.launch()
