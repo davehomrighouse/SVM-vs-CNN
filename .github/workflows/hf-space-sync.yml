@@ -12,5 +12,5 @@ jobs:
       - uses: huggingface/hub-sync@v0.1.0
         with:
           github_repo_id: ${{ github.repository }}
-          huggingface_repo_id: your-hf-username/your-space-name
-          hf_token: ${{ secrets.HF_TOKEN }}
+          huggingface_repo_id: homrighoused/DH_Demos
+          hf_token: ${{ secrets.HUGGINGFACE }}
